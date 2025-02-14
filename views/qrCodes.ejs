@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor QR Codes</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h2>Approved & Rejected Visitor QR Codes</h2>
+
+    <% if (visitors.length === 0) { %>
+        <p>No QR codes found.</p>
+    <% } else { %>
+        <div>
+            <!-- Approved Visitors Section -->
+            <h3>✅ Approved Visitors</h3>
+            <div class="qr-container" id="approved-container"></div>
+            <div class="pagination">
+                <button id="prevApprovedBtn" disabled>⬅️ Previous</button>
+                <span id="approvedPageNumber">1</span>
+                <button id="nextApprovedBtn">Next ➡️</button>
+            </div>
+
+            <!-- Rejected Visitors Section -->
+            <h3>❌ Rejected Visitors</h3>
+            <div class="qr-container" id="rejected-container"></div>
+            <div class="pagination">
+                <button id="prevRejectedBtn" disabled>⬅️ Previous</button>
+                <span id="rejectedPageNumber">1</span>
+                <button id="nextRejectedBtn">Next ➡️</button>
+            </div>
+        </div>
+    <% } %>
+
+    <a href="/security"><button>⬅️ Back to Dashboard</button></a>
+
+    <script>
+        // Get visitor data from server-side (EJS)
+        const visitors = <%- JSON.stringify(visitors) %>; // ✅ Corrected for JSON
+
+        // Separate Approved and Rejected Visitors
+        const approvedVisitors = visitors.filter(visitor => visitor.status === "Approved");
+        const rejectedVisitors = visitors.filter(visitor => visitor.status === "Rejected");
+
+        // Pagination Variables
+        let approvedPage = 1;
+        let rejectedPage = 1;
+        const visitorsPerPage = 4;
+        
+        const approvedContainer = document.getElementById("approved-container");
+        const rejectedContainer = document.getElementById("rejected-container");
+        
+        const approvedPageNumber = document.getElementById("approvedPageNumber");
+        const rejectedPageNumber = document.getElementById("rejectedPageNumber");
+
+        const prevApprovedBtn = document.getElementById("prevApprovedBtn");
+        const nextApprovedBtn = document.getElementById("nextApprovedBtn");
+        const prevRejectedBtn = document.getElementById("prevRejectedBtn");
+        const nextRejectedBtn = document.getElementById("nextRejectedBtn");
+
+        function displayVisitors(visitorsList, container, pageNumberEl, page, prevBtn, nextBtn) {
+            container.innerHTML = "";
+            const start = (page - 1) * visitorsPerPage;
+            const end = start + visitorsPerPage;
+            const visitorsToShow = visitorsList.slice(start, end);
+
+            visitorsToShow.forEach(visitor => {
+                const visitorCard = document.createElement("div");
+                visitorCard.classList.add("qr-card");
+                visitorCard.innerHTML = `
+                    <h3>${visitor.fullName}</h3>
+                    <p>Contact: ${visitor.contactInfo}</p>
+                    <img src="${visitor.photoUrl}" alt="Photo of ${visitor.fullName}" class="visitor-photo">
+                    <img src="${visitor.qrCode}" alt="QR Code for ${visitor.fullName}">
+                    <p>Purpose: ${visitor.purpose}</p>
+                    <p>Host: ${visitor.hostName} (Dept: ${visitor.hostDepartment})</p>
+                    <p>Company: ${visitor.company}</p>
+                    <p>Check-in: ${visitor.checkInTime}</p>
+                    <p>Check-out: ${visitor.checkOutTime}</p>
+                    <p>Status: <strong>${visitor.status}</strong></p>
+                `;
+                container.appendChild(visitorCard);
+            });
+
+            // Update pagination controls
+            pageNumberEl.innerText = page;
+            prevBtn.disabled = page === 1;
+            nextBtn.disabled = page >= Math.ceil(visitorsList.length / visitorsPerPage);
+        }
+
+        // Pagination Handlers
+        prevApprovedBtn.addEventListener("click", () => {
+            if (approvedPage > 1) {
+                approvedPage--;
+                displayVisitors(approvedVisitors, approvedContainer, approvedPageNumber, approvedPage, prevApprovedBtn, nextApprovedBtn);
+            }
+        });
+
+        nextApprovedBtn.addEventListener("click", () => {
+            if (approvedPage < Math.ceil(approvedVisitors.length / visitorsPerPage)) {
+                approvedPage++;
+                displayVisitors(approvedVisitors, approvedContainer, approvedPageNumber, approvedPage, prevApprovedBtn, nextApprovedBtn);
+            }
+        });
+
+        prevRejectedBtn.addEventListener("click", () => {
+            if (rejectedPage > 1) {
+                rejectedPage--;
+                displayVisitors(rejectedVisitors, rejectedContainer, rejectedPageNumber, rejectedPage, prevRejectedBtn, nextRejectedBtn);
+            }
+        });
+
+        nextRejectedBtn.addEventListener("click", () => {
+            if (rejectedPage < Math.ceil(rejectedVisitors.length / visitorsPerPage)) {
+                rejectedPage++;
+                displayVisitors(rejectedVisitors, rejectedContainer, rejectedPageNumber, rejectedPage, prevRejectedBtn, nextRejectedBtn);
+            }
+        });
+
+        // Initial Display
+        displayVisitors(approvedVisitors, approvedContainer, approvedPageNumber, approvedPage, prevApprovedBtn, nextApprovedBtn);
+        displayVisitors(rejectedVisitors, rejectedContainer, rejectedPageNumber, rejectedPage, prevRejectedBtn, nextRejectedBtn);
+    </script>
+
+    <style>
+        .qr-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .qr-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            text-align: center;
+            width: 250px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .visitor-photo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+        .pagination button {
+            padding: 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .pagination button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+
+</body>
+</html>

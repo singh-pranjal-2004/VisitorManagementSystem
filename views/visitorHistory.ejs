@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor History</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .history-container { width: 80%; margin: auto; text-align: left; }
+        .date-section { margin-bottom: 20px; }
+        .visitor-card { padding: 10px; border: 1px solid #ccc; margin: 5px 0; border-radius: 5px; }
+        .approved { background-color: #d4edda; } /* Green for approved */
+        .rejected { background-color: #f8d7da; } /* Red for rejected */
+    </style>
+</head>
+<body>
+    <h2>Visitor History</h2>
+
+    <div class="history-container">
+        <% for (let date in history) { %>
+            <div class="date-section">
+                <h3><%= date %></h3>
+                <% history[date].forEach(visitor => { %>
+                    <div class="visitor-card <%= visitor.status.toLowerCase() %>">
+                        <strong><%= visitor.fullName %></strong> - <%= visitor.status %> <br>
+                        Contact: <%= visitor.contactInfo %> | Purpose: <%= visitor.purpose %> <br>
+                        Host: <%= visitor.hostName %> (Dept: <%= visitor.hostDepartment %>) <br>
+                        <small>Updated at: <%= visitor.updatedAt ? visitor.updatedAt.toLocaleString() : "Unknown Date" %></small>
+
+                    </div>
+                <% }); %>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>

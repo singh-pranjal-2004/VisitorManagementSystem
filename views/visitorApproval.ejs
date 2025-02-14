@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Approval</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to external CSS -->
+    <script>
+        async function updateStatus(visitorId, action) {
+            try {
+                console.log(`Updating visitor ${visitorId} with action: ${action}`); // Debugging log
+
+                const response = await fetch(`/admin/${action}/${visitorId}`, { method: 'PUT' });
+
+                if (!response.ok) {
+                    let errorMessage = "Failed to update visitor status!";
+                    try {
+                        const errorData = await response.json();
+                        errorMessage = errorData.message || errorMessage;
+                    } catch (e) {
+                        console.error("❌ Error parsing error response:", e);
+                    }
+                    alert(`Error: ${errorMessage}`);
+                    return;
+                }
+
+                alert(`Visitor has been ${action}d successfully!`);
+                location.reload(); // Refresh the page after action
+            } catch (error) {
+                console.error("❌ Error updating status:", error);
+                alert("Something went wrong! Try again.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Pending Visitors</h2>
+
+    <% if (visitors.length === 0) { %>
+        <p>No pending visitors at the moment.</p>
+    <% } else { %>
+        <table>
+            <tr>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Purpose</th>
+                <th>Host</th>
+                <th>Action</th>
+            </tr>
+            <% visitors.forEach(visitor => { %>
+            <tr>
+                <td><img src="<%= visitor.photoUrl %>" width="80" alt="Visitor Photo"></td>
+                <td><%= visitor.fullName %></td>
+                <td><%= visitor.contactInfo %></td>
+                <td><%= visitor.purpose %></td>
+                <td><%= visitor.hostName %> (Dept: <%= visitor.hostDepartment %>)</td>
+                <td>
+                    <button class="approve-btn" onclick="updateStatus('<%= visitor._id %>', 'approve')">✅ Approve</button>
+                    <button class="reject-btn" onclick="updateStatus('<%= visitor._id %>', 'reject')">❌ Reject</button>
+                </td>
+            </tr>
+            <% }); %>
+        </table>
+    <% } %>
+</body>
+</html>

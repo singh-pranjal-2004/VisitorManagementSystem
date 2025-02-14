@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Registration</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Visitor Registration</h2>
+
+        <form id="visitorForm">
+            <input type="text" id="fullName" placeholder="Full Name" required>
+            <input type="text" id="contactInfo" placeholder="Contact Info" required>
+            <input type="text" id="purpose" placeholder="Purpose of Visit" required>
+            <input type="text" id="hostName" placeholder="Host Name" required>
+            <input type="text" id="hostDepartment" placeholder="Host Department" required>
+            <input type="text" id="company" placeholder="Company Name (Optional)">
+
+            <!-- Check-in and Check-out Time (Only Time Input) -->
+            <label for="checkInTime">Check-in Time:</label>
+            <input type="time" id="checkInTime" required>
+
+            <label for="checkOutTime">Check-out Time:</label>
+            <input type="time" id="checkOutTime" required>
+
+            <!-- Camera Section -->
+            <div id="cameraSection">
+                <video id="camera" autoplay></video>
+                <button type="button" id="captureBtn">📸 Capture Photo</button>
+            </div>
+
+            <!-- Display Captured Image -->
+            <img id="capturedImage" style="display: none;" />
+
+            <input type="hidden" id="photo"> <!-- Hidden field to store Base64 image -->
+            <button type="submit">Register Visitor</button>
+        </form>
+
+        <p id="message"></p>
+
+        <!-- View Approved Visitors QR Codes -->
+        <a href="/visitor/qr-codes">
+            <button>📌 View All QR Codes</button>
+        </a>
+
+        <!-- Back to Dashboard -->
+        <a href="/security">
+            <button>⬅️ Back to Dashboard</button>
+        </a>
+    </div>
+
+    <script src="/scripts/visitorForm.js"></script> <!-- External script -->
+</body>
+</html>

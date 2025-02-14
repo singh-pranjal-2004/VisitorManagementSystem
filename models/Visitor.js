@@ -1,19 +1,17 @@
 const mongoose = require("mongoose");
 
-const VisitorSchema = new mongoose.Schema({
-    fullName: { type: String, required: true },
-    contactInfo: { type: String, required: true },
-    purpose: { type: String, required: true },
-    hostEmployee: { 
-        name: { type: String, required: true },
-        department: { type: String, required: true }
-    },
-    company: { type: String },
-    checkInTime: { type: Date, default: Date.now }, // Automatically logs entry time
-    checkOutTime: { type: Date },
-    photoURL: { type: String, required: true }, // ImageKit URL for the visitor's photo
-    status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending" },
-    qrCode: { type: String }, // Store QR code URL or data
+const visitorSchema = new mongoose.Schema({
+  fullName: { type: String, required: true },
+  contactInfo: { type: String, required: true },
+  purpose: { type: String, required: true },
+  hostName: { type: String, required: true },
+  hostDepartment: { type: String, required: true },
+  company: { type: String, default: "Individual" },
+  checkInTime: { type: String, required: true },
+  checkOutTime: { type: String, required: true },
+  photoUrl: { type: String, required: true },
+  status: { type: String, enum: ["Pending", "Approved", "Rejected"], default: "Pending" },
+  qrCode: { type: String }, // Store QR Code URL
 }, { timestamps: true });
 
-module.exports = mongoose.model("Visitor", VisitorSchema);
+module.exports = mongoose.model("Visitor", visitorSchema);

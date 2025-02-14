@@ -97,7 +97,7 @@ router.post("/login", async (req, res) => {
         // ✅ Send JSON response with correct redirect URL
         let redirectUrl = "/";
         if (userRole === "admin") redirectUrl = "/admin";
-        else if (userRole === "security") redirectUrl = "/security-dashboard";
+        else if (userRole === "security") redirectUrl = "/security";
         else if (userRole === "employee") redirectUrl = "/employee-dashboard";
 
         res.json({ message: "Login successful", role: userRole, redirectUrl });

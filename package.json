@@ -13,8 +13,12 @@
     "bcryptjs": "^3.0.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "imagekit": "^6.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.1",
-    "node": "^22.14.0"
+    "node": "^22.14.0",
+    "qrcode": "^1.5.4"
   }
 }

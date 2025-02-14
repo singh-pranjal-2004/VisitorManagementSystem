@@ -27,6 +27,14 @@ const adminOnly = (req, res, next) => {
     next();
 };
 
+// Middleware for security guard-only access
+const securityOnly = (req, res, next) => {
+    if (!req.user || req.user.role !== "security") {
+        return res.redirect("/login"); // Redirect instead of sending JSON
+    }
+    next();
+};
+
 // Middleware for flexible role-based access
 const authorize = (roles) => {
     return (req, res, next) => {
@@ -37,4 +45,4 @@ const authorize = (roles) => {
     };
 };
 
-module.exports = { protect, adminOnly, authorize };
+module.exports = { protect, adminOnly, securityOnly, authorize };

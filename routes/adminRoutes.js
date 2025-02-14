@@ -3,6 +3,9 @@ const bcrypt = require("bcryptjs");
 const Admin = require("../models/Admin");
 const SecurityGuard = require("../models/SecurityGuard");
 const Employee = require("../models/Employee");
+const Visitor = require("../models/Visitor"); // ✅ Import Visitor model
+const imagekit = require("../config/imagekit"); // ✅ ImageKit for photo upload
+const QRCode = require("qrcode"); // ✅ QR Code generator
 const { protect, adminOnly } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
@@ -97,5 +100,103 @@ router.get("/view-security", protect, adminOnly, async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+
+
+
+
+// ✅ Route to render pending visitors approval page
+router.get("/visitorApproval", protect, adminOnly, async (req, res) => {
+    try {
+        const visitors = await Visitor.find({ status: "Pending" }); // Get pending visitors
+        res.render("visitorApproval", { visitors });
+    } catch (error) {
+        console.error("Error fetching visitors:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+// ✅ Approve Visitor & Generate QR Code
+router.put("/approve/:id", protect, adminOnly, async (req, res) => {
+    try {
+        const visitor = await Visitor.findById(req.params.id);
+        if (!visitor) return res.status(404).json({ message: "Visitor not found" });
+
+        // ✅ Generate QR Code with ALL visitor details
+        const qrData = JSON.stringify({
+            fullName: visitor.fullName,
+            contactInfo: visitor.contactInfo,
+            purpose: visitor.purpose,
+            hostName: visitor.hostName,
+            hostDepartment: visitor.hostDepartment,
+            company: visitor.company || "Individual",
+            checkInTime: visitor.checkInTime,
+            checkOutTime: visitor.checkOutTime,
+            status: "Approved",
+        });
+
+        const qrCodeUrl = await QRCode.toDataURL(qrData);
+
+        // ✅ Update visitor status and store the QR Code
+        visitor.status = "Approved";
+        visitor.qrCode = qrCodeUrl;
+        await visitor.save();
+
+        res.json({
+            message: "✅ Visitor approved, QR Code generated!",
+            visitor
+        });
+
+    } catch (error) {
+        console.error("❌ Error approving visitor:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// ✅ Reject Visitor
+router.put("/reject/:id", protect, adminOnly, async (req, res) => {
+    try {
+        const visitor = await Visitor.findByIdAndUpdate(req.params.id, { status: "Rejected" }, { new: true });
+        if (!visitor) return res.status(404).json({ message: "Visitor not found" });
+        res.json({ message: "❌ Visitor rejected!", visitor });
+    } catch (error) {
+        console.error("❌ Error rejecting visitor:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// ✅ Route to Get All QR Codes for Approved Visitors
+router.get("/qr-codes", protect, adminOnly, async (req, res) => {
+    try {
+        const approvedVisitors = await Visitor.find({ status: "Approved" });
+        res.render("qr", { visitors: approvedVisitors });
+    } catch (error) {
+        console.error("❌ Error fetching QR codes:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+router.get("/visitor-history", protect, adminOnly, async (req, res) => {
+    try {
+        const visitors = await Visitor.find({
+            status: { $in: ["Approved", "Rejected"] }
+        }).sort({ updatedAt: -1 });
+
+        // Group visitors by date (handle undefined updatedAt)
+        const history = {};
+        visitors.forEach(visitor => {
+            const date = visitor.updatedAt ? visitor.updatedAt.toISOString().split("T")[0] : "Unknown Date";
+
+            if (!history[date]) history[date] = [];
+            history[date].push(visitor);
+        });
+
+        res.render("visitorHistory", { history });
+    } catch (error) {
+        console.error("❌ Error fetching visitor history:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
 
 module.exports = router;
