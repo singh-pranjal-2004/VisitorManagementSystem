@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- Link to your CSS -->
+</head>
+<body>
+    <h2>Register</h2>
+    <form action="/api/auth/register" method="POST">
+        <label>Email:</label>
+        <input type="email" name="email" required>
+
+        <label>Password:</label>
+        <input type="password" name="password" required>
+
+        <label>Role:</label>
+        <select name="role">
+            <option value="admin">Admin</option>
+            <option value="security">Security Guard</option>
+            <option value="employee">Employee</option>
+            <option value="visitor">Visitor</option>
+        </select>
+
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>

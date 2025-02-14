@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to external CSS -->
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, Admin</h1>
+
+        <!-- User Management Section -->
+        <div class="button-container">
+            <h2>Manage Users</h2>
+            <a href="/admin/add-employee" class="btn">➕ Add Employee</a>
+            <a href="/admin/add-security" class="btn">🛡 Add Security Guard</a>
+            <a href="/admin/add-admin" class="btn">🔑 Add Admin</a>
+        </div>
+
+        <div class="button-container">
+            <a href="/admin/view-admins" class="btn">View Admins</a>
+            <a href="/admin/view-employees" class="btn">View Employees</a>
+            <a href="/admin/view-security" class="btn">View Security Guards</a>
+        </div>
+
+        <!-- Logout Button -->
+        <button id="logoutBtn" class="btn logout-btn">🚪 Logout</button>
+    </div>
+
+    <script>
+        document.getElementById("logoutBtn").addEventListener("click", async function () {
+            try {
+                const response = await fetch("/api/auth/logout", {
+                    method: "POST",
+                    credentials: "include" // Ensure cookies are included
+                });
+
+                if (response.ok) {
+                    window.location.href = "/api/auth/login"; // Redirect to login page
+                } else {
+                    alert("Logout failed. Please try again.");
+                }
+            } catch (error) {
+                console.error("Logout error:", error);
+                alert("Something went wrong.");
+            }
+        });
+    </script>
+</body>
+</html>

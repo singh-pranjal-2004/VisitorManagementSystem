@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add <%= role.charAt(0).toUpperCase() + role.slice(1) %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h2>Add <%= role.charAt(0).toUpperCase() + role.slice(1) %></h2>
+
+    <form action="/admin/add-user" method="POST">
+        <input type="hidden" name="role" value="<%= role %>">
+        <label>Email:</label>
+        <input type="email" name="email" required>
+        
+        <label>Password:</label>
+        <input type="password" name="password" required>
+        
+        <% if (role === "employee") { %>
+            <label>Visitor Limit:</label>
+            <input type="number" name="visitorLimit" min="1" max="10" value="5">
+        <% } %>
+
+        <button type="submit">Add <%= role.charAt(0).toUpperCase() + role.slice(1) %></button>
+    </form>
+
+    <a href="/admin">Back to Dashboard</a>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1><%= title %></h1>
+
+        <!-- Display User List -->
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <% if (title === "Employees") { %>
+                        <th>Visitor Limit</th>
+                    <% } %>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(user => { %>
+                    <tr>
+                        <td><%= user.email %></td>
+                        <% if (title === "Employees") { %>
+                            <td><%= user.visitorLimit %></td>
+                        <% } %>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <br>
+        <a href="/admin" class="btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>

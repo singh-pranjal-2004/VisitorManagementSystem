@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Visitor Management System</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to external CSS -->
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm" method="POST"> <!-- ✅ Added method="POST" -->
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-group">
+                <label for="role">Select Role:</label>
+                <select id="role" name="role" required>
+                    <option value="admin">Admin</option>
+                    <option value="security">Security Guard</option>
+                    <option value="employee">Employee</option>
+                </select>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const role = document.getElementById("role").value;
+
+            try {
+                const response = await fetch("/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password, role }),
+                    credentials: "include" // ✅ Allows cookies to be sent
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    window.location.href = data.redirectUrl; // ✅ Redirect after login
+                } else {
+                    alert(data.message); // Show error message
+                }
+            } catch (error) {
+                console.error("Error during login:", error);
+                alert("Something went wrong. Please try again.");
+            }
+        });
+    </script>
+</body>
+</html>
