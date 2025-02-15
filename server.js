@@ -7,8 +7,8 @@ require("dotenv").config();
 const app = express();
 
 // ✅ Middleware Setup
-app.use(express.urlencoded({ extended: true })); // For form data
-app.use(express.json()); // For JSON payloads
+app.use(express.urlencoded({ extended: true, limit: "10mb" })); // For form data
+app.use(express.json({ limit: "10mb" })); // For JSON payloads
 app.use(cookieParser()); // For reading JWT from cookies
 app.use(express.static(path.join(__dirname, "public"))); // Serve static assets
 

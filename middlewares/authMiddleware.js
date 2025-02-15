@@ -45,4 +45,13 @@ const authorize = (roles) => {
     };
 };
 
-module.exports = { protect, adminOnly, securityOnly, authorize };
+// Middleware to allow only employees
+const employeeOnly = (req, res, next) => {
+    if (req.user && req.user.role === "Employee") {
+        next();
+    } else {
+        res.status(403).json({ message: "Access denied. Employees only!" });
+    }
+};
+
+module.exports = { protect, adminOnly, securityOnly, authorize, employeeOnly };

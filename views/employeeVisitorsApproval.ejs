@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Visitor Approval</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to external CSS -->
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Visitor Approval</h1>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Contact Info</th>
+                    <th>Purpose</th>
+                    <th>Host Name</th>
+                    <th>Check-in Time</th>
+                    <th>Check-out Time</th>
+                    <th>Photo</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% employeeVisitors.forEach(visitor => { %>
+                    <tr>
+                        <td><%= visitor.fullName %></td>
+                        <td><%= visitor.contactInfo %></td>
+                        <td><%= visitor.purpose %></td>
+                        <td><%= visitor.hostName %></td>
+                        <td><%= visitor.checkInTime %></td>
+                        <td><%= visitor.checkOutTime %></td>
+                        <td>
+                            <img src="<%= visitor.photoUrl %>" alt="Visitor Photo" width="100">
+                        </td>
+                        <td id="status-<%= visitor._id %>"><%= visitor.status %></td>
+                        <td>
+                            <button onclick="updateVisitorStatus('<%= visitor._id %>', 'Approved')">✅ Approve</button>
+                            <button onclick="updateVisitorStatus('<%= visitor._id %>', 'Rejected')">❌ Reject</button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <a href="/admin" class="btn">🔙 Back to Dashboard</a>
+    </div>
+
+    <script>
+        function updateVisitorStatus(visitorId, status) {
+            fetch(`/admin/update-employee-visitor-status/${visitorId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ status })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`status-${visitorId}`).innerText = status;
+                    alert(`Visitor ${status.toLowerCase()} successfully!`);
+                } else {
+                    alert("Failed to update status.");
+                }
+            })
+            .catch(error => console.error("Error updating visitor status:", error));
+        }
+    </script>
+</body>
+</html>

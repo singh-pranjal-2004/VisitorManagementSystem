@@ -82,7 +82,7 @@ router.post("/login", async (req, res) => {
 
         // ✅ Generate JWT Token
         const token = jwt.sign(
-            { id: user._id, role: userRole }, // Explicitly passing role
+            { id: user._id, role: userRole, email: user.email }, // Explicitly passing role
             process.env.JWT_SECRET,
             { expiresIn: "1d" }
         );
@@ -98,7 +98,7 @@ router.post("/login", async (req, res) => {
         let redirectUrl = "/";
         if (userRole === "admin") redirectUrl = "/admin";
         else if (userRole === "security") redirectUrl = "/security";
-        else if (userRole === "employee") redirectUrl = "/employee-dashboard";
+        else if (userRole === "employee") redirectUrl = "/employee";
 
         res.json({ message: "Login successful", role: userRole, redirectUrl });
     } catch (error) {

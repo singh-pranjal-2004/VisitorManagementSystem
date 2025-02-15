@@ -4,6 +4,7 @@ const Admin = require("../models/Admin");
 const SecurityGuard = require("../models/SecurityGuard");
 const Employee = require("../models/Employee");
 const Visitor = require("../models/Visitor"); // ✅ Import Visitor model
+const EmployeeVisitor = require("../models/EmployeeVisitor"); // ✅ Import EmployeeVisitor Model
 const imagekit = require("../config/imagekit"); // ✅ ImageKit for photo upload
 const QRCode = require("qrcode"); // ✅ QR Code generator
 const { protect, adminOnly } = require("../middlewares/authMiddleware");
@@ -194,6 +195,63 @@ router.get("/visitor-history", protect, adminOnly, async (req, res) => {
     } catch (error) {
         console.error("❌ Error fetching visitor history:", error);
         res.status(500).send("Internal Server Error");
+    }
+});
+
+
+// ✅ Render Employee Visitor Approval Page
+router.get("/employee-visitorApproval", protect, adminOnly, async (req, res) => {
+    try {
+        const employeeVisitors = await EmployeeVisitor.find({ status: "Pending" });
+        res.render("employeeVisitorsApproval", { employeeVisitors });
+    } catch (error) {
+        console.error("❌ Error fetching employee visitors:", error);
+        res.status(500).send("Error loading employee visitor approvals");
+    }
+});
+
+
+router.put("/update-employee-visitor-status/:id", protect, adminOnly, async (req, res) => {
+    try {
+        const { status } = req.body;
+        const visitor = await EmployeeVisitor.findById(req.params.id);
+
+        if (!visitor) {
+            return res.status(404).json({ success: false, message: "Visitor not found" });
+        }
+
+        visitor.status = status;
+
+        if (status.trim().toLowerCase() === "approved") {
+            const qrData = JSON.stringify({
+                fullName: visitor.fullName,
+                contactInfo: visitor.contactInfo,
+                purpose: visitor.purpose,
+                hostName: visitor.hostName,
+                checkInTime: visitor.checkInTime,
+                checkOutTime: visitor.checkOutTime,
+                status: "Approved",
+            });
+
+            visitor.qrCode = await QRCode.toDataURL(qrData);
+        }
+
+        await visitor.save();
+        res.json({ success: true, message: `Visitor ${status} successfully!`, visitor });
+    } catch (error) {
+        console.error("Error updating visitor status:", error);
+        res.status(500).json({ success: false, message: "Error updating visitor status" });
+    }
+});
+
+// ✅ Route: View Employee Visitor History (Only for Admins)
+router.get("/employee-visitor-history", protect, adminOnly, async (req, res) => {
+    try {
+        const visitors = await EmployeeVisitor.find().sort({ createdAt: -1 }); // Fetch in descending order (latest first)
+        res.render("employeeVisitorHistory", { visitors });
+    } catch (error) {
+        console.error("❌ Error fetching employee visitor history:", error);
+        res.status(500).send("Error fetching employee visitor history");
     }
 });
 

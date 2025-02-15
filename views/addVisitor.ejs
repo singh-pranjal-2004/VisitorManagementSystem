@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Visitor</title>
+    <style>
+        /* Popup styling */
+        #successPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Display Visitor Limit -->
+<p><strong>Remaining Visitor Limit: </strong> <span id="visitorLimit">Loading...</span></p>
+
+    <h2>Add Visitor</h2>
+    
+    <form id="visitorForm" action="/employee/add-visitor" method="POST">
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" required>
+
+        <label for="contactInfo">Contact Info:</label>
+        <input type="text" id="contactInfo" name="contactInfo" required>
+
+        <label for="purpose">Purpose:</label>
+        <input type="text" id="purpose" name="purpose" required>
+
+        <label for="hostName">Host Name:</label>
+        <input type="text" id="hostName" name="hostName" required>
+
+        <label for="hostDepartment">Host Department:</label>
+        <input type="text" id="hostDepartment" name="hostDepartment" required>
+
+        <label for="company">Company (optional):</label>
+        <input type="text" id="company" name="company">
+
+        <label for="checkInTime">Check-in Time:</label>
+        <input type="time" id="checkInTime" name="checkInTime" required>
+
+        <label for="checkOutTime">Check-out Time:</label>
+        <input type="time" id="checkOutTime" name="checkOutTime" required>
+
+        <!-- Camera and Upload Options -->
+        <div id="imageOptions">
+            <video id="camera" autoplay style="width: 300px; display: block;"></video>
+            <button type="button" id="captureBtn">Capture Photo</button>
+
+            <input type="file" id="photoUpload" accept="image/jpeg, image/png">
+        </div>
+
+        <!-- Display Captured/Uploaded Image -->
+        <img id="capturedImage" style="width: 300px; display: none;">
+        <button type="button" id="removeImageBtn" style="display: none;">Remove Image</button>
+
+        <!-- Hidden Input to Store Base64 Image -->
+        <input type="hidden" id="photoBase64" name="photoBase64">
+
+        <button type="submit">Register Visitor</button>
+    </form>
+
+    <!-- Success Popup -->
+    <div id="successPopup">
+        Visitor request sent successfully!
+    </div>
+
+    <button onclick="goToDashboard()" style="
+    padding: 10px 20px; 
+    background-color: #007BFF; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer;">
+    Back to Dashboard
+</button>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+    const visitorLimitElement = document.getElementById("visitorLimit");
+    const submitBtn = document.querySelector("button[type='submit']");
+
+    // Fetch Visitor Limit
+    async function fetchVisitorLimit() {
+        try {
+            const response = await fetch("/employee/visitor-limit"); // API to get visitor limit
+            const data = await response.json();
+            visitorLimitElement.textContent = data.visitorLimit;
+
+            // Disable form if limit is 0
+            if (data.visitorLimit <= 0) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Limit Reached";
+                submitBtn.style.backgroundColor = "gray";
+            }
+        } catch (error) {
+            console.error("Error fetching visitor limit:", error);
+            visitorLimitElement.textContent = "Error";
+        }
+    }
+
+    fetchVisitorLimit();
+});
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const video = document.getElementById("camera");
+            const captureBtn = document.getElementById("captureBtn");
+            const photoUpload = document.getElementById("photoUpload");
+            const capturedImage = document.getElementById("capturedImage");
+            const removeImageBtn = document.getElementById("removeImageBtn");
+            const imageOptions = document.getElementById("imageOptions");
+            const photoBase64Input = document.getElementById("photoBase64");
+            const visitorForm = document.getElementById("visitorForm");
+            const successPopup = document.getElementById("successPopup");
+
+            let stream = null;
+
+            // Start Camera
+            async function startCamera() {
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    video.srcObject = stream;
+                } catch (error) {
+                    console.error("❌ Camera access denied:", error);
+                }
+            }
+            startCamera();
+
+            // Capture Photo from Camera
+            captureBtn.addEventListener("click", () => {
+                const canvas = document.createElement("canvas");
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                // Convert to Base64
+                const imageData = canvas.toDataURL("image/jpeg");
+                photoBase64Input.value = imageData;
+
+                // Stop Camera
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    video.srcObject = null;
+                }
+
+                // Hide capture options, show image preview
+                imageOptions.style.display = "none";
+                capturedImage.src = imageData;
+                capturedImage.style.display = "block";
+                removeImageBtn.style.display = "block";
+            });
+
+            // Upload Photo from File Input
+            photoUpload.addEventListener("change", (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        photoBase64Input.value = e.target.result; // Store Base64
+                        capturedImage.src = e.target.result;
+                        capturedImage.style.display = "block";
+                        removeImageBtn.style.display = "block";
+                        imageOptions.style.display = "none"; // Hide options
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Remove Image and Reset Options
+            removeImageBtn.addEventListener("click", () => {
+                capturedImage.style.display = "none";
+                removeImageBtn.style.display = "none";
+                imageOptions.style.display = "block";
+                photoBase64Input.value = "";
+                startCamera(); // Restart camera if removed
+            });
+
+            // Show Success Popup and Reset Form on Submission
+            visitorForm.addEventListener("submit", (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                // Submit the form data to the server
+                visitorForm.submit();
+
+                // Show success popup
+                successPopup.style.display = "block";
+
+                // Hide popup after 3 seconds
+                setTimeout(() => {
+                    successPopup.style.display = "none";
+                }, 3000);
+
+                // Reset form values after submission
+                visitorForm.reset();
+
+                // Reset image options
+                capturedImage.style.display = "none";
+                removeImageBtn.style.display = "none";
+                imageOptions.style.display = "block";
+                
+                photoBase64Input.value = "";
+
+                // Restart the camera if needed
+                startCamera();
+            });
+        });
+
+        function goToDashboard() {
+        window.location.href = "/employee"; // Replace "/dashboard" with the actual URL of your dashboard
+        }
+    </script>
+</body>
+</html>
