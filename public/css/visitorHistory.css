@@ -1,0 +1,104 @@
+/* Import Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Main History Container */
+.history-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    width: 90%;
+    max-width: 800px;
+    text-align: left;
+}
+
+/* Title */
+h2 {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #00ffd0;
+    text-shadow: 0 0 10px #00ffd0;
+    margin-bottom: 20px;
+}
+
+/* Date Section */
+.date-section {
+    margin-bottom: 20px;
+}
+
+/* Visitor Card */
+.visitor-card {
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 10px 0;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Visitor Info */
+.visitor-info {
+    flex-grow: 1;
+    font-size: 1em;
+}
+
+/* Visitor Image */
+.visitor-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+
+/* Approved Status */
+.approved {
+    background: rgba(0, 255, 127, 0.2);
+    border-left: 5px solid #00ff7f;
+}
+
+/* Rejected Status */
+.rejected {
+    background: rgba(255, 68, 68, 0.2);
+    border-left: 5px solid #ff4444;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .history-container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    .visitor-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+
+    .visitor-image {
+        width: 70px;
+        height: 70px;
+    }
+}

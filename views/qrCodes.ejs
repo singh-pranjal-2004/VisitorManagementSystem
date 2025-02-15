@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visitor QR Codes</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/qrCodes.css">
 </head>
 <body>
     <h2>Approved & Rejected Visitor QR Codes</h2>
@@ -72,8 +72,7 @@
                     <h3>${visitor.fullName}</h3>
                     <p>Contact: ${visitor.contactInfo}</p>
                     <img src="${visitor.photoUrl}" alt="Photo of ${visitor.fullName}" class="visitor-photo">
-                    <img src="${visitor.qrCode}" alt="QR Code for ${visitor.fullName}">
-                    <p>Purpose: ${visitor.purpose}</p>
+                    ${visitor.status === "Approved" ? `<img src="${visitor.qrCode}" alt="QR Code for ${visitor.fullName}">` : ""}                    <p>Purpose: ${visitor.purpose}</p>
                     <p>Host: ${visitor.hostName} (Dept: ${visitor.hostDepartment})</p>
                     <p>Company: ${visitor.company}</p>
                     <p>Check-in: ${visitor.checkInTime}</p>

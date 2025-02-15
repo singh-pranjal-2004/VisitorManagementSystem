@@ -1,0 +1,148 @@
+/* Import Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Heading */
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #00ffd0;
+    text-shadow: 0 0 10px #00ffd0;
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* QR Container */
+.qr-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* QR Card */
+.qr-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    text-align: center;
+    width: 250px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease-in-out;
+}
+
+.qr-card:hover {
+    transform: scale(1.05);
+}
+
+/* Visitor Photo */
+.visitor-photo {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #00ffd0;
+    margin-bottom: 10px;
+}
+
+/* QR Code Image */
+.qr-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.pagination button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    background-color: #00ffd0;
+    color: #000;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 0 10px #00ffd0;
+}
+
+.pagination button:hover {
+    background: #00bfa5;
+    box-shadow: 0 0 20px #00bfa5;
+}
+
+.pagination button:disabled {
+    background-color: #555;
+    color: #aaa;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Back Button */
+a button {
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 10px;
+    background: #00ffd0;
+    color: #000;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 0 10px #00ffd0;
+}
+
+a button:hover {
+    background: #00bfa5;
+    box-shadow: 0 0 20px #00bfa5;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 480px) {
+    .qr-card {
+        width: 90%;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    .pagination button {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+}

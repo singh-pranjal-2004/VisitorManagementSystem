@@ -1,0 +1,75 @@
+/* index.css */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    color: #ffffff;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: #00ffd0; /* Neon effect */
+    text-shadow: 0 0 10px #00ffd0;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.login-button {
+    text-decoration: none;
+    color: #000;
+    background: #00ffd0;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 0 10px #00ffd0;
+}
+
+.login-button:hover {
+    background: #00bfa5;
+    box-shadow: 0 0 20px #00bfa5;
+}
+
+/* Uncomment if you add the register button later */
+/*
+.register-button {
+    text-decoration: none;
+    color: #000;
+    background: #ff0080;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 0 10px #ff0080;
+}
+
+.register-button:hover {
+    background: #d6006a;
+    box-shadow: 0 0 20px #d6006a;
+}
+*/

@@ -1,0 +1,97 @@
+/* Import Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+/* Dashboard Container */
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    width: 90%;
+    max-width: 450px;
+}
+
+/* Headings */
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #00ffd0;
+    text-shadow: 0 0 10px #00ffd0;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.1rem;
+    margin: 5px 0;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    background: #00ffd0;
+    color: #000;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 0 10px #00ffd0;
+    margin: 10px 0;
+}
+
+button:hover {
+    background: #00bfa5;
+    box-shadow: 0 0 20px #00bfa5;
+}
+
+/* Logout Button */
+#logoutBtn {
+    background: red;
+    color: white;
+    box-shadow: 0 0 10px red;
+}
+
+#logoutBtn:hover {
+    background: darkred;
+    box-shadow: 0 0 20px darkred;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 480px) {
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}

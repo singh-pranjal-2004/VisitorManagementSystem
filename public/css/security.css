@@ -1,0 +1,62 @@
+/* Import Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+/* Heading */
+h1 {
+    font-size: 32px;
+    color: #00ffd0;
+    text-shadow: 0 0 10px #00ffd0;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+button {
+    width: 200px;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    background: #00ffd0;
+    color: #000;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px;
+    transition: 0.3s ease-in-out;
+}
+
+button:hover {
+    background: #00cca3;
+    transform: scale(1.05);
+}
+
+/* Logout Button - Red Theme */
+#logoutBtn {
+    background: #ff4d4d;
+    color: white;
+}
+
+#logoutBtn:hover {
+    background: #cc0000;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 480px) {
+    button {
+        width: 90%;
+    }
+}
