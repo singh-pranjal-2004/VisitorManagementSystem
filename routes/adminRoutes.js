@@ -8,8 +8,19 @@ const EmployeeVisitor = require("../models/EmployeeVisitor"); // ✅ Import Empl
 const imagekit = require("../config/imagekit"); // ✅ ImageKit for photo upload
 const QRCode = require("qrcode"); // ✅ QR Code generator
 const { protect, adminOnly } = require("../middlewares/authMiddleware");
+require("dotenv").config();
+
+const nodemailer = require("nodemailer");
 
 const router = express.Router();
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+});
 
 // ✅ Admin Dashboard Route
 router.get("/", protect, adminOnly, (req, res) => {
@@ -137,10 +148,29 @@ router.put("/approve/:id", protect, adminOnly, async (req, res) => {
 
         const qrCodeUrl = await QRCode.toDataURL(qrData);
 
+        const uploadedImage = await imagekit.upload({
+            file: qrCodeUrl, // Base64 string
+            fileName: `${Date.now()}.jpg`, // Unique filename
+            folder: "/qrCode"
+        });
+
         // ✅ Update visitor status and store the QR Code
         visitor.status = "Approved";
         visitor.qrCode = qrCodeUrl;
         await visitor.save();
+
+        const mailOptions = {
+            from: 'Visitor Management System singhpranjal.ak@gmail.com',
+            to: visitor.contactInfo,
+            subject: "Your Visit Has Been Approved",
+            html: `<div style="font-family: Arial, sans-serif; text-align: center;">
+                    <h2 style="color: #2E86C1;">Your Visit is Approved</h2>
+                    <p style="font-size: 16px;">Please show this QR code at the entrance:</p>
+                    <img src='${uploadedImage.url}' style="border: 2px solid #2E86C1; padding: 10px; margin-top: 10px;"/>
+                    <p>Thank you for visiting!</p>
+                </div>`
+        };
+        await transporter.sendMail(mailOptions);
 
         res.json({
             message: "✅ Visitor approved, QR Code generated!",
@@ -234,6 +264,25 @@ router.put("/update-employee-visitor-status/:id", protect, adminOnly, async (req
             });
 
             visitor.qrCode = await QRCode.toDataURL(qrData);
+
+            const uploadedImage = await imagekit.upload({
+                file: visitor.qrCode, // Base64 string
+                fileName: `${Date.now()}.jpg`, // Unique filename
+                folder: "/qrCode-employeeVisitor"
+            });
+
+            const mailOptions = {
+                from: 'Visitor Management System singhpranjal.ak@gmail.com',
+                to: visitor.contactInfo,
+                subject: "Your Employee Visit Has Been Approved",
+                html:`<div style="font-family: Arial, sans-serif; text-align: center;">
+                <h2 style="color: #2E86C1;">Your Visit is Approved</h2>
+                <p style="font-size: 16px;">Please show this QR code at the entrance:</p>
+                <img src='${uploadedImage.url}' style="border: 2px solid #2E86C1; padding: 10px; margin-top: 10px;"/>
+                <p>Thank you for visiting!</p>
+            </div>`
+            };
+            await transporter.sendMail(mailOptions);
         }
 
         await visitor.save();
