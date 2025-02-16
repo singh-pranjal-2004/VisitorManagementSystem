@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="/css/admin.css"> <!-- Link to external CSS -->
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
     <div class="container">
         <h1>Welcome, Admin</h1>
 
-        <!-- User Management Section -->
         <div class="button-container">
             <h2>Manage Users</h2>
-            <a href="/admin/add-employee" class="btn">➕ Add Employee</a>
-            <a href="/admin/add-security" class="btn">🛡 Add Security Guard</a>
-            <a href="/admin/add-admin" class="btn">🔑 Add Admin</a>
+            <a href="/admin/add-employee" class="btn">Add Employee</a>
+            <a href="/admin/add-security" class="btn">Add Security Guard</a>
+            <a href="/admin/add-admin" class="btn">Add Admin</a>
         </div>
 
         <div class="button-container">
@@ -27,16 +26,15 @@
         <div class="button-container">
             <h2>Manage Visitors</h2>
             <a href="/admin/visitorApproval" class="btn">✅ Accept/Reject Security Visitors</a>
-            <a href="/admin/employee-visitorApproval" class="btn">✅ Accept/Reject Employee Visitors</a> <!-- ✅ New Button -->
+            <a href="/admin/employee-visitorApproval" class="btn">✅ Accept/Reject Employee Visitors</a>
             
             <h2>History of visitors</h2>
             <a href="/admin/visitor-history" class="btn">📜 View Visitor History</a>
-            <a href="/admin/employee-visitor-history" class="btn">📜 View Employee Visitor History</a> <!-- ✅ New Button -->
+            <a href="/admin/employee-visitor-history" class="btn">📜 View Employee Visitor History</a>
         </div>
         
 
 
-        <!-- Logout Button -->
         <button id="logoutBtn" class="btn logout-btn">🚪 Logout</button>
     </div>
 
@@ -45,11 +43,11 @@
             try {
                 const response = await fetch("/api/auth/logout", {
                     method: "POST",
-                    credentials: "include" // Ensure cookies are included
+                    credentials: "include" 
                 });
 
                 if (response.ok) {
-                    window.location.href = "/api/auth/login"; // Redirect to login page
+                    window.location.href = "/api/auth/login"; 
                 } else {
                     alert("Logout failed. Please try again.");
                 }

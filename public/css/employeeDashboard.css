@@ -1,7 +1,5 @@
-/* Import Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-/* General Styles */
 body {
     margin: 0;
     padding: 0;
@@ -16,7 +14,6 @@ body {
     text-align: center;
 }
 
-/* Dashboard Container */
 .container {
     background: rgba(255, 255, 255, 0.1);
     padding: 30px;
@@ -27,7 +24,6 @@ body {
     max-width: 450px;
 }
 
-/* Headings */
 h2 {
     font-size: 2rem;
     font-weight: 700;
@@ -41,7 +37,6 @@ p {
     margin: 5px 0;
 }
 
-/* Buttons */
 button {
     width: 100%;
     padding: 12px;
@@ -63,7 +58,6 @@ button:hover {
     box-shadow: 0 0 20px #00bfa5;
 }
 
-/* Logout Button */
 #logoutBtn {
     background: red;
     color: white;
@@ -75,7 +69,6 @@ button:hover {
     box-shadow: 0 0 20px darkred;
 }
 
-/* Responsive Design */
 @media screen and (max-width: 480px) {
     .container {
         width: 95%;

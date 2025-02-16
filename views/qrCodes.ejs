@@ -82,13 +82,11 @@
                 container.appendChild(visitorCard);
             });
 
-            // Update pagination controls
             pageNumberEl.innerText = page;
             prevBtn.disabled = page === 1;
             nextBtn.disabled = page >= Math.ceil(visitorsList.length / visitorsPerPage);
         }
 
-        // Pagination Handlers
         prevApprovedBtn.addEventListener("click", () => {
             if (approvedPage > 1) {
                 approvedPage--;
@@ -117,7 +115,6 @@
             }
         });
 
-        // Initial Display
         displayVisitors(approvedVisitors, approvedContainer, approvedPageNumber, approvedPage, prevApprovedBtn, nextApprovedBtn);
         displayVisitors(rejectedVisitors, rejectedContainer, rejectedPageNumber, rejectedPage, prevRejectedBtn, nextRejectedBtn);
     </script>

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Visitor Management System</title>
-    <link rel="stylesheet" href="/css/login.css"> <!-- Link to external CSS -->
+    <link rel="stylesheet" href="/css/login.css"> 
 </head>
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form id="loginForm" method="POST"> <!-- ✅ Added method="POST" -->
+        <form id="loginForm" method="POST"> 
             <div class="input-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
@@ -32,7 +32,7 @@
 
     <script>
         document.getElementById("loginForm").addEventListener("submit", async function (event) {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault();
 
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
@@ -43,15 +43,15 @@
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email, password, role }),
-                    credentials: "include" // ✅ Allows cookies to be sent
+                    credentials: "include"
                 });
 
                 const data = await response.json();
 
                 if (response.ok) {
-                    window.location.href = data.redirectUrl; // ✅ Redirect after login
+                    window.location.href = data.redirectUrl;
                 } else {
-                    alert(data.message); // Show error message
+                    alert(data.message);
                 }
             } catch (error) {
                 console.error("Error during login:", error);

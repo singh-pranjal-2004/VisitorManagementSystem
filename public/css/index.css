@@ -27,7 +27,7 @@ h1 {
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 20px;
-    color: #00ffd0; /* Neon effect */
+    color: #00ffd0; 
     text-shadow: 0 0 10px #00ffd0;
 }
 
@@ -54,7 +54,7 @@ h1 {
     box-shadow: 0 0 20px #00bfa5;
 }
 
-/* Uncomment if you add the register button later */
+/* Uncomment if you add the register button */
 /*
 .register-button {
     text-decoration: none;

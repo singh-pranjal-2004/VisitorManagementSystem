@@ -23,7 +23,7 @@
                             <small>Updated at: <%= visitor.updatedAt ? visitor.updatedAt.toLocaleString() : "Unknown Date" %></small>
                         </div>
                         <% if (visitor.photoUrl) { %> 
-                            <img src="<%= visitor.photoUrl %>" alt="Visitor Image" class="visitor-image"> <!-- ✅ Image Added -->
+                            <img src="<%= visitor.photoUrl %>" alt="Visitor Image" class="visitor-image">
                         <% } %>
                     </div>
                 <% }); %>

@@ -6,7 +6,6 @@ const SecurityGuardSchema = new mongoose.Schema({
     password: { type: String, required: true }
 });
 
-// Method to compare hashed passwords
 SecurityGuardSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };

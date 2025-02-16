@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Security Dashboard</title>
-    <link rel="stylesheet" href="/css/security.css"> <!-- Link to your CSS -->
+    <link rel="stylesheet" href="/css/security.css">
 </head>
 <body>
     <h1>Security Guard Dashboard</h1>
 
-    <!-- Register Visitor Button -->
     <button onclick="window.location.href='/security/visitor-form'">Register Visitor</button>
 
-    <!-- Logout Button -->
     <button id="logoutBtn">Logout</button>
 
     <script>
@@ -20,7 +18,7 @@
             try {
                 const response = await fetch("/api/auth/logout", { method: "POST" });
                 if (response.ok) {
-                    window.location.href = "/api/auth/login"; // Redirect to login page after logout
+                    window.location.href = "/api/auth/login"; 
                 } else {
                     alert("Logout failed. Try again.");
                 }

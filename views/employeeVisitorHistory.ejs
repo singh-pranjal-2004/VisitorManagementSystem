@@ -15,12 +15,12 @@
                 <div class="visitor-info">
                     <strong><%= visitor.fullName %></strong> - <%= visitor.status %> <br>
                     Contact: <%= visitor.contactInfo %> | Purpose: <%= visitor.purpose %> <br>
-                    Host: <%= visitor.hostName %> (<%= visitor.hostEmail %>) <br> <!-- ✅ Host Email Added -->
+                    Host: <%= visitor.hostName %> (<%= visitor.hostEmail %>) <br> 
                     Check-in: <%= visitor.checkInTime %> | Check-out: <%= visitor.checkOutTime %> <br>
                     <small>Updated at: <%= visitor.updatedAt ? visitor.updatedAt.toLocaleString() : "Unknown Date" %></small>
                 </div>
                 <% if (visitor.photoUrl) { %> 
-                    <img src="<%= visitor.photoUrl %>" alt="Visitor Image" class="visitor-image"> <!-- ✅ Image Added -->
+                    <img src="<%= visitor.photoUrl %>" alt="Visitor Image" class="visitor-image">
                 <% } %>
             </div>
         <% } %>

@@ -92,9 +92,8 @@ h2 {
 }
 
 
-/* Dropdown styling */
 .input-group select {
-    appearance: none; /* Removes default dropdown arrow */
+    appearance: none; 
     -webkit-appearance: none;
     -moz-appearance: none;
     background: rgba(0, 0, 0, 0.5);
@@ -103,26 +102,7 @@ h2 {
     cursor: pointer;
 }
 
-/* Custom dropdown arrow */
-/* .input-group {
-    position: relative;
-}
 
-.input-group select {
-    padding-right: 40px;
-}
-
-.input-group::after {
-    content: '▼';
-    position: absolute;
-    right: 15px;
-    top: 55%;
-    transform: translateY(-50%);
-    color: rgba(255, 255, 255, 0.6);
-    pointer-events: none;
-} */
-
-/* Dropdown options */
 .input-group select option {
     background: #222222;
     color: #ffffff;

@@ -1,4 +1,3 @@
-/* Import Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body {
@@ -16,20 +15,18 @@ body {
     padding: 20px;
 }
 
-/* Main Container */
 .container {
     background: rgba(255, 255, 255, 0.1);
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
-    width: 550px; /* Same width as addVisitor.css */
+    width: 550px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-/* Title */
 h2 {
     font-size: 2.5em;
     font-weight: 700;
@@ -38,21 +35,18 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* Form Styling */
 form {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-/* Labels */
 label {
     font-weight: bold;
     text-align: left;
     display: block;
 }
 
-/* Input Fields */
 input, select {
     width: 100%;
     padding: 12px;
@@ -65,12 +59,10 @@ input, select {
     box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-/* Placeholder text */
 input::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
 
-/* Dropdown Customization */
 select {
     appearance: none;
     background: rgba(255, 255, 255, 0.2);
@@ -78,13 +70,11 @@ select {
     cursor: pointer;
 }
 
-/* Fix for dropdown arrow color */
 select option {
     background: #333;
     color: white;
 }
 
-/* Submit Button */
 button {
     width: 100%;
     padding: 14px;
@@ -105,7 +95,6 @@ button:hover {
     box-shadow: 0 0 20px #00bfa5;
 }
 
-/* Camera Section */
 #cameraSection {
     display: flex;
     flex-direction: column;
@@ -128,7 +117,6 @@ video {
     display: none;
 }
 
-/* Back to Dashboard Button */
 a {
     text-decoration: none;
 }
@@ -144,7 +132,6 @@ a button:hover {
     background: #0056b3;
 }
 
-/* Responsive Design */
 @media (max-width: 600px) {
     .container {
         width: 90%;

@@ -1,7 +1,5 @@
-/* Import Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-/* General Styles */
 body {
     margin: 0;
     padding: 0;
@@ -16,7 +14,6 @@ body {
     text-align: center;
 }
 
-/* Container */
 .container {
     width: 90%;
     max-width: 800px;
@@ -26,7 +23,6 @@ body {
     box-shadow: 0px 0px 20px rgba(0, 255, 208, 0.2);
 }
 
-/* Heading */
 h1 {
     font-size: 28px;
     color: #00ffd0;
@@ -34,7 +30,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -60,12 +55,10 @@ td {
     color: #ffffff;
 }
 
-/* Hover effect */
 tr:hover {
     background: rgba(0, 255, 208, 0.2);
 }
 
-/* Back Button */
 .btn {
     display: inline-block;
     padding: 12px 20px;
@@ -86,7 +79,6 @@ tr:hover {
     transform: scale(1.05);
 }
 
-/* Responsive Design */
 @media screen and (max-width: 600px) {
     .container {
         width: 100%;

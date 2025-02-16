@@ -3,13 +3,10 @@ const router = express.Router();
 const { protect, authorize, securityOnly } = require("../middlewares/authMiddleware");
 const securityController = require("../controllers/securityController");
 
-// Security Dashboard Route
 router.get("/", protect, authorize(["security"]), securityController.getSecurityDashboard);
 
-// Visitor Form Route
 router.get("/visitor-form", protect, authorize(["security"]), securityController.getVisitorForm);
 
-// Process Visitor Entry
 router.post("/visitor-entry", protect, authorize(["security"]), securityController.processVisitorEntry);
 
 router.get("/qr-codes", protect, securityOnly, async (req, res) => {

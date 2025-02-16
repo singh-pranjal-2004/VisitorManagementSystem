@@ -1,4 +1,3 @@
-/* addUser.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body {
@@ -56,9 +55,8 @@ input::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
 
-/* Number input specific styles */
 input[type="number"] {
-    -moz-appearance: textfield; /* Remove default arrows in Firefox */
+    -moz-appearance: textfield; 
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -101,7 +99,6 @@ a:hover {
     text-shadow: 0 0 10px #00bfa5;
 }
 
-/* Responsive Design */
 @media (max-width: 400px) {
     form {
         width: 90%;

@@ -17,7 +17,6 @@ cron.schedule("0 0 * * *", async () => {
     }
 });
 
-// ✅ Employee Dashboard Route (Fetching Email)
 router.get("/", protect, authorize(["employee"]), async (req, res) => {
     try {
         const employee = await Employee.findById(req.user.id).select("email");
@@ -31,12 +30,10 @@ router.get("/", protect, authorize(["employee"]), async (req, res) => {
     }
 });
 
-// ✅ Route to Display Add Visitor Form
 router.get("/add-visitor", protect, authorize(["employee"]), (req, res) => {
     res.render("addVisitor");
 });
 
-// ✅ Handle Add Visitor Form Submission
 router.post("/add-visitor", protect, authorize(["employee"]), async (req, res) => {
     try {
         const {
@@ -48,34 +45,30 @@ router.post("/add-visitor", protect, authorize(["employee"]), async (req, res) =
             company,
             checkInTime,
             checkOutTime,
-            photoBase64 // Base64 image from frontend
+            photoBase64 
         } = req.body;
 
         if (!fullName || !contactInfo || !purpose || !hostName || !hostDepartment || !checkInTime || !checkOutTime || !photoBase64) {
             return res.status(400).json({ message: "All fields are required" });
         }
 
-        // ✅ Fetch the logged-in employee
         const employee = await Employee.findById(req.user.id);
         if (!employee) {
             return res.status(404).json({ message: "Employee not found" });
         }
 
-        // ✅ Check if visitor limit is available
         if (employee.visitorLimit <= 0) {
             return res.status(400).json({ message: "Visitor limit exceeded" });
         }
 
-        // ✅ Upload to ImageKit
         const uploadedImage = await imagekit.upload({
-            file: photoBase64, // Base64 string
-            fileName: `${Date.now()}.jpg`, // Unique filename
+            file: photoBase64,
+            fileName: `${Date.now()}.jpg`,
             folder: "/employeeVisitor-photos"
         });
 
-        const hostEmail = req.user.email; // Get the logged-in employee's email
+        const hostEmail = req.user.email; 
 
-        // ✅ Save visitor data in EmployeeVisitor collection
         const newVisitor = new EmployeeVisitor({
             fullName,
             contactInfo,
@@ -86,13 +79,12 @@ router.post("/add-visitor", protect, authorize(["employee"]), async (req, res) =
             company: company || "Individual",
             checkInTime,
             checkOutTime,
-            photoUrl: uploadedImage.url, // Store ImageKit URL
+            photoUrl: uploadedImage.url,
             status: "Pending",
         });
 
-        await newVisitor.save(); // Save visitor first
+        await newVisitor.save();
 
-        // ✅ Decrease visitor limit after successful save
         employee.visitorLimit -= 1;
         await employee.save();
 
@@ -105,7 +97,7 @@ router.post("/add-visitor", protect, authorize(["employee"]), async (req, res) =
 
 router.get("/visitor-limit", protect, authorize(["employee"]), async (req, res) => {
     try {
-        const employee = await Employee.findById(req.user.id); // Use req.user.id instead of email
+        const employee = await Employee.findById(req.user.id);
 
         if (!employee) {
             return res.status(404).json({ message: "Employee not found" });
@@ -118,14 +110,12 @@ router.get("/visitor-limit", protect, authorize(["employee"]), async (req, res) 
     }
 });
 
-// ✅ Route to View QR Codes for Employee's Visitors
 router.get("/view-qr", protect, authorize(["employee"]), async (req, res) => {
     try {
-        const employeeEmail = req.user.email; // Get logged-in employee's email
+        const employeeEmail = req.user.email;
 
-        // Fetch visitors invited by this employee
         const visitors = await EmployeeVisitor.find({
-            hostEmail: employeeEmail, // ✅ Now filtering by hostEmail
+            hostEmail: employeeEmail,
         }).select("fullName contactInfo photoUrl qrCode purpose hostName hostDepartment company checkInTime checkOutTime status");
 
         res.render("employeeQR", { visitors });
@@ -134,8 +124,5 @@ router.get("/view-qr", protect, authorize(["employee"]), async (req, res) => {
         res.status(500).send("Error loading QR codes");
     }
 });
-
-
-
 
 module.exports = router;

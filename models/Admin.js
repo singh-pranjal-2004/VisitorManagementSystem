@@ -6,7 +6,6 @@ const AdminSchema = new mongoose.Schema({
     password: { type: String, required: true }
 });
 
-// Method to compare hashed passwords
 AdminSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };

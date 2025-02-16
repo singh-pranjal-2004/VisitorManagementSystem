@@ -1,7 +1,6 @@
 /* Import Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-/* General Styles */
 body {
     margin: 0;
     padding: 0;
@@ -16,7 +15,6 @@ body {
     text-align: center;
 }
 
-/* Heading */
 h1 {
     font-size: 32px;
     color: #00ffd0;
@@ -24,7 +22,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Buttons */
 button {
     width: 200px;
     padding: 12px;
@@ -44,7 +41,6 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* Logout Button - Red Theme */
 #logoutBtn {
     background: #ff4d4d;
     color: white;
@@ -54,7 +50,6 @@ button:hover {
     background: #cc0000;
 }
 
-/* Responsive Design */
 @media screen and (max-width: 480px) {
     button {
         width: 90%;

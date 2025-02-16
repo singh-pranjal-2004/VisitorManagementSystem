@@ -1,9 +1,8 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-// Middleware to protect routes (JWT Authentication)
 const protect = (req, res, next) => {
-    const token = req.cookies?.token; // Ensure token exists
+    const token = req.cookies?.token; 
 
     if (!token) {
         return res.status(401).json({ message: "Unauthorized! No token provided." });
@@ -11,7 +10,7 @@ const protect = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded; // Attach user data to request object
+        req.user = decoded;
         next();
     } catch (error) {
         console.error("JWT Verification Error:", error);
@@ -19,33 +18,29 @@ const protect = (req, res, next) => {
     }
 };
 
-// Middleware for strict admin-only access
 const adminOnly = (req, res, next) => {
     if (!req.user || req.user.role !== "admin") {
-        return res.redirect("/login"); // Redirect instead of sending JSON
+        return res.redirect("/login");
     }
     next();
 };
 
-// Middleware for security guard-only access
 const securityOnly = (req, res, next) => {
     if (!req.user || req.user.role !== "security") {
-        return res.redirect("/login"); // Redirect instead of sending JSON
+        return res.redirect("/login"); 
     }
     next();
 };
 
-// Middleware for flexible role-based access
 const authorize = (roles) => {
     return (req, res, next) => {
         if (!req.user || !roles.includes(req.user.role)) {
-            return res.redirect("/login"); // Redirect instead of sending JSON
+            return res.redirect("/login"); 
         }
         next();
     };
 };
 
-// Middleware to allow only employees
 const employeeOnly = (req, res, next) => {
     if (req.user && req.user.role === "Employee") {
         next();

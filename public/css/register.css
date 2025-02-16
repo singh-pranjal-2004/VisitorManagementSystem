@@ -1,7 +1,6 @@
 /* Import Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-/* General Styles */
 body {
     margin: 0;
     padding: 0;
@@ -15,7 +14,6 @@ body {
     height: 100vh;
 }
 
-/* Heading */
 h2 {
     font-size: 28px;
     color: #00ffd0;
@@ -23,7 +21,6 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* Form */
 form {
     background: rgba(255, 255, 255, 0.1);
     padding: 20px;
@@ -34,14 +31,12 @@ form {
     text-align: center;
 }
 
-/* Labels */
 label {
     display: block;
     margin: 10px 0 5px;
     font-weight: bold;
 }
 
-/* Input Fields */
 input, select {
     width: 100%;
     padding: 10px;
@@ -55,7 +50,6 @@ input, select {
     transition: 0.3s ease-in-out;
 }
 
-/* Placeholder & Focus Effect */
 input::placeholder {
     color: rgba(255, 255, 255, 0.7);
 }
@@ -65,7 +59,6 @@ input:focus, select:focus {
     border-left: 3px solid #00ffd0;
 }
 
-/* Button */
 button {
     width: 100%;
     padding: 12px;
@@ -85,7 +78,6 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* Responsive Design */
 @media screen and (max-width: 480px) {
     form {
         width: 90%;

@@ -1,7 +1,5 @@
-/* Import Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-/* General Styles */
 body {
     margin: 0;
     padding: 0;
@@ -16,7 +14,6 @@ body {
     padding: 20px;
 }
 
-/* Heading */
 h2 {
     font-size: 2rem;
     font-weight: 700;
@@ -25,7 +22,6 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* History Container */
 .history-container {
     width: 90%;
     max-width: 800px;
@@ -33,7 +29,6 @@ h2 {
     text-align: left;
 }
 
-/* Visitor Card */
 .visitor-card {
     background: rgba(255, 255, 255, 0.1);
     padding: 15px;
@@ -44,39 +39,34 @@ h2 {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
     transition: transform 0.3s ease-in-out;
-    color: #ddd; /* Changed text color for better visibility */
+    color: #ddd; 
 }
 
-/* Hover Effect */
 .visitor-card:hover {
     transform: scale(1.02);
 }
 
-/* Status-Based Colors */
 .approved {
-    border-left: 5px solid #28a745; /* Green border for approved */
+    border-left: 5px solid #28a745; 
 }
 
 .rejected {
-    border-left: 5px solid #dc3545; /* Red border for rejected */
+    border-left: 5px solid #dc3545;
 }
 
-/* Visitor Info */
 .visitor-info {
     flex-grow: 1;
     padding: 10px;
 }
 
-/* Make important text visible */
 .visitor-info strong {
-    color: #00ffd0; /* Highlight visitor name */
+    color: #00ffd0; 
 }
 
 .visitor-info small {
-    color: rgba(255, 255, 255, 0.7); /* Make timestamp readable */
+    color: rgba(255, 255, 255, 0.7);
 }
 
-/* Visitor Image */
 .visitor-image {
     width: 80px;
     height: 80px;
@@ -86,7 +76,6 @@ h2 {
     border: 3px solid #00ffd0;
 }
 
-/* Responsive Design */
 @media screen and (max-width: 480px) {
     .history-container {
         width: 100%;

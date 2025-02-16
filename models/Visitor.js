@@ -11,7 +11,7 @@ const visitorSchema = new mongoose.Schema({
   checkOutTime: { type: String, required: true },
   photoUrl: { type: String, required: true },
   status: { type: String, enum: ["Pending", "Approved", "Rejected"], default: "Pending" },
-  qrCode: { type: String }, // Store QR Code URL
+  qrCode: { type: String },
 }, { timestamps: true });
 
 module.exports = mongoose.model("Visitor", visitorSchema);
