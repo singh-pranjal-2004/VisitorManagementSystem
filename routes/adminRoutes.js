@@ -8,6 +8,7 @@ const EmployeeVisitor = require("../models/EmployeeVisitor"); // ✅ Import Empl
 const imagekit = require("../config/imagekit"); // ✅ ImageKit for photo upload
 const QRCode = require("qrcode"); // ✅ QR Code generator
 const { protect, adminOnly } = require("../middlewares/authMiddleware");
+require("dotenv").config();
 
 const nodemailer = require("nodemailer");
 
@@ -16,8 +17,8 @@ const router = express.Router();
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        user: "singhpranjal.ak@gmail.com",
-        pass: "mjpl ohen ebrc gvuu"
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     }
 });
 
