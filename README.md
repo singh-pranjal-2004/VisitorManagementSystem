@@ -8,6 +8,9 @@ A **Visitor Management System (VMS)** helps workplaces ensure **security, regula
 ## 🎥 Video Demonstration  
 [Click here to watch the demonstration](https://drive.google.com/file/d/1nfT4_TXsGFfdSjDORtkXUZEdHppJSC41/view?usp=sharing)
 
+## Credentials for Login (Admin, Employee, Security)
+Email: pranjal@gmail.com
+Pass: pranjal
 
 ## 📌 Features  
 
